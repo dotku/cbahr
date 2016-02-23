@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?php echo $output['info']['title'] ?> - <?php echo C('WEB_TITLE') ?></title>
+    
+    <?php require_once __DIR__.'/../Common/head.html'; ?>
+    
+  </head>
+  <body>
+    <?php require_once __DIR__.'/../Common/nav.html'; ?>
+    <div class="container main">
+        <div class="col-md-8">
+            <h1><?php echo $output['info']['title'] ?></h1>
+            <i class="glyphicon glyphicon-eye-open" title="views"></i> <?php echo $output['info']['view'] ?>
+            <table class="table">
+                <tr><th class="col-md-2 col-sm-3">No.</th><td><?php echo $output['info']['id'] ?></td></tr>
+                <tr><th>Title</th><td><?php echo $output['info']['title'] ?></td></tr>
+                <tr><th>Company</th><td><?php echo $output['info']['company']?$output['info']['company']:'未知'?></td></tr>
+                <tr><th>Location</th><td><?php echo $output['info']['location'] ?></td></tr>
+                <tr><th>Content</th><td><?php echo nl2br($output['info']['content']) ?></td></tr>
+                <?php if($output['info']['publisher']) { ?>
+                    <tr><th>Publiser</th><td><?php echo $output['info']['publisher'] ?></td></tr>
+                <?php } ?>
+                <?php if($output['info']['publisher_company']) { ?>
+                    <tr><th>Publiser Company</th><td><?php echo $output['info']['publisher_company'] ?></td></tr>
+                <?php } ?>
+            </table>
+        </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?php echo C('WEB_TITLE') ?></title>
+    
+    <include file="Common:head"/>
+    
+  </head>
+  <body>
+    <include file="Common:nav"/>
+    <div class="container main">
+        <h1><?php echo MODULE_NAME?></h1>
+        <table class="table">
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th class="mobile-hidden">Company</th>
+                <th class="mobile-hidden">Location</th>
+                <th class="mobile-hidden">Publisher</th>
+                <th>Time</th>
+            </tr>
+            <?php if (is_array($output['list_job']) && !empty($output['list_job'])) { ?>
+                <?php foreach($output['list_job'] as $key => $val) { ?>
+                <tr>
+                    <td><?php echo $val['id'] ?></td>
+                    <td><a href="{:U('detail')}/<?php echo $val['id'] ?>"><?php echo $val['title'] ?></a></td>
+                    <td class="mobile-hidden"><?php echo $val['company']?$val['company']:'(Unkown)'; ?></td>
+                    <td class="mobile-hidden"><?php echo $val['location'] ?></td>
+                    <td class="mobile-hidden">
+                        <?php echo $val['publisher']; ?>
+                        <?php echo $val['publisher_company']
+                            ? ', <a href="'.U('/').'/../../../bz/index.php?keyword='.$val['publisher_company'].'">'.$val['publisher_company'].'</a>'
+                            : ''; 
+                        ?>
+                    </td>
+                    <td><?php echo date('Y-m-d', strtotime($val['publish_date'])); ?></td>
+                 </tr>
+                <?php } ?>
+            <?php } ?>
+        </table>
+    </div>
+  </body>
+</html>

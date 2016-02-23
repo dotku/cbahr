@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?php echo C('WEB_TITLE') ?></title>
+    
+    <?php require_once __DIR__.'/../Common/head.html'; ?>
+    
+  </head>
+  <body>
+    <?php require_once __DIR__.'/../Common/nav.html'; ?>
+    <div class="container main">
+        <h1>Add</h1>
+            <form class="col-md-8" method="post">
+            <div class="form-group">
+                <label for="">Title</label><input type="input" name="title" class="form-control" required >
+            </div>
+            
+            <div class="form-group">
+                <label for="">Content</label><textarea class="form-control" name="content" rows="5"></textarea>
+            </div>
+            <fieldset>
+                <legend>Company</legend>
+            <div class="form-group col-md-6">
+                <label for="">Company Name</label><input type="input" name="company" class="form-control" >
+            </div>
+            <div class="form-group col-md-6">
+                <label for="">Company Location</label><input type="input" name="location" class="form-control" >
+            </div>
+            </fieldset>
+            <fieldset>
+                <legend>Recruiter</legend>
+                <div class="form-group col-md-6">
+                    <label for="">Recruiter Name</label><input type="input" name="publisher" class="form-control" >
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="">Recruiter Company</label><input type="input" name="publisher_company" class="form-control" >
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>CAPTCHA</legend>
+                <div class="form-group col-md-4">
+                    <label for="">Please input the code</label><input type="input" name="vcode" class="form-control" >
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="">Code</label>
+                    <a href="javascript:void(0)" title="Refresh" onclick="getNewVCode();">
+                        <img src="<?php echo U('/index/vcode')?>" class="form-control" style="padding:0px;" id="vcode">
+                    </a>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        <form>
+    </div>
+    <script>
+        function getNewVCode() {
+            $("#vcode").attr('src', '<?php echo U('/index/vcode')?>?'+Math.random());
+        }
+    </script>
+  </body>
+</html>

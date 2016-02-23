@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?php echo C('WEB_TITLE') ?></title>
+    
+    <?php require_once __DIR__.'/../Common/head.html'; ?>
+    
+  </head>
+  <body>
+    <?php require_once __DIR__.'/../Common/nav.html'; ?>
+    <div class="container main">
+        <table class="table">
+            <tr><th>编号</th><th>标题</th><th>公司</th><th>工作地点</th><th>发布者</th><th>操作</th></tr>
+            <?php if (is_array($output['list_job']) && !empty($output['list_job'])) { ?>
+                <?php foreach($output['list_job'] as $key => $val) { ?>
+                <tr>
+                    <td><?php echo $val['id'] ?></td>
+                    <td><?php echo $val['title'] ?></td>
+                    <td><?php echo $val['company'] ?></td>
+                    <td><?php echo $val['location'] ?></td>
+                    <td><?php echo $val['publiser'] ?></td>
+                    <td>
+                        <a href="{:U('/job/delete')}/?id=<?php echo $val['id'] ?>">删除</a>
+                        <a href="{:U('/job/edit')}/<?php echo $val['id'] ?>">编辑</a>
+                    </td>
+                 </tr>
+                <?php } ?>
+            <?php } ?>
+        </table>
+    </div>
+  </body>
+</html>

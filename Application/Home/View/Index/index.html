@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title><?php echo C('WEB_TITLE') ?> - Post your job for free</title>
+    
+    <?php require_once __DIR__.'/../Common/head.html'; ?>
+  </head>
+  <body>
+    <?php require_once __DIR__.'/../Common/nav.html'; ?>
+    <div class="container main">
+        <h1><i class="glyphicon glyphicon-home"></i> <?php echo MODULE_NAME?></h1>
+        <h2>In 30 Days</h2>
+        <table class="table" ng-app="jobList" ng-controller="customersCtrl">
+            <tr>
+                <th>No.</th>
+                <th class="col-md-4">Title</th>
+                <th class="mobile-hidden">Company</th>
+                <th class="mobile-hidden">Location</th>
+                <th class="mobile-hidden">Publisher</th>
+                <th class="mobile-hidden">Time</th>
+            </tr>
+            <tr ng-repeat="x in jobs">
+                <td>{{ x.id }}</td>
+                <td><a href="<?php echo U('detail') ?>/{{ x.id }}" title="{{ x.title }}">{{ x.title || '(Unkown)' | limitWord: 38 }}</a></td>
+                <td class="mobile-hidden">{{ x.company || '(Unkown)'}}</td>
+                <td class="mobile-hidden">{{ x.location || '(Unkown)'}}</td>
+                <td class="mobile-hidden" title="From: {{ x.publisher_company || '(Unkown)' }}">{{ x.publisher || '(Unkown)'}}</td>
+                <td class="mobile-hidden">{{ x.publish_date || '(Unkown)'}}</td>
+            </tr>
+            <tr ng-show="!jobs.length">
+                <td colspan="10">无数据</td>
+            </tr>
+        </table>
+        <script>
+        var app = angular.module('jobList', []);
+        app.controller('customersCtrl', function($scope, $http) {
+            $http.get("<?php echo U('../api.php/getjoblist') ?>")
+            .success(function(response) {$scope.jobs = response.data;});
+        });
+        app.filter('limitWord', function(){
+            return function(input, limit) {
+                var matches = input.match(/%[A-F\d]{2}/g, 'U'); // cjk chars
+                str = encodeURIComponent(input);
+                var cjkLength = (str.replace(/%[A-F\d]{2}/g, 'U').length - input.length)/2;
+                //window.console ? console.log(cjkLength + ' ' + input) : '';
+                if (input.length+cjkLength > limit) {
+                    window.console ? console.log('over limit') : '';
+                    return input.substring(0, limit-cjkLength) + '...';
+                } else {
+                    return input;
+                }
+            }
+        });
+
+        </script>
+    </div>
+    <?php require_once __DIR__.'/../Common/footer.html'; ?>
+  </body>
+</html>
